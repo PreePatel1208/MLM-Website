@@ -39,11 +39,14 @@ class CreateNewUser implements CreatesNewUsers
             'referral_code' => ['nullable', 'min:8', 'exists:users,unique_code'],
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
-        if (!$input['referral_code']) {
-            $input['unique_code'] = generateRandomString(8);
-        } else {
-            $input['unique_code'] = null;
-        }
+        $input['unique_code'] = generateRandomString(8);
+        if (!$input['referral_code'])
+            $input['referral_code'] = null;
+        // if (!$input['referral_code']) {
+        //     $input['unique_code'] = generateRandomString(8);
+        // } else {
+        //     $input['unique_code'] = null;
+        // }
         //   dd( $input['unique_code']);
         // $myRandomString = generateRandomString(5);
         $user = User::create([
@@ -53,29 +56,41 @@ class CreateNewUser implements CreatesNewUsers
             'referral_code' => $input['referral_code'],
             'unique_code' => $input['unique_code'],
         ]);
-        if (!$user->unique_code) {
+       
+        if ($user->referral_code) {
             Income::create([
                 'user_id' => $user->id,
                 'register_bonus' => 100,
             ]);
-            $recentRegister = User::where('id', '!=', $user->id)->where('referral_code', $user->referral_code)->orWhere('unique_code', $user->referral_code)->orderBy('id', 'desc')->limit(3)->get()->toArray();
-            if (count($recentRegister) > 1) {
+            $recentRegister = $user;
+            $mlm_users = [];
+            for ($ievel = 1; $ievel <= 3; $ievel++) {
+                // dump($recentRegister);
+                $recentRegister = User::where('id', '!=', $user->id)->where('unique_code', $recentRegister->referral_code)->orderBy('id', 'desc')->first();
+                // dump($recentRegister);
+                if ($recentRegister) {
+                    array_push($mlm_users, $recentRegister);
+                }else{
+                    break;
+                }
+            }
+            if (count($mlm_users) > 1) {
                 $level = 3;
-                foreach ($recentRegister as $refence_user) {
+                foreach ($mlm_users as $refence_user) {
                     if ($level == 3) {
-                       $income= Income::create([
+                        $income = Income::create([
                             'user_id' => $user->id,
                             'reference_user_id' => $refence_user['id'],
                             'level1_bonus' => round((100 * ($level * 10)) / 100),
                         ]);
                     } else if ($level == 2) {
-                        $income= Income::create([
+                        $income = Income::create([
                             'user_id' => $user->id,
                             'reference_user_id' => $refence_user['id'],
                             'level2_bonus' => round((100 * ($level * 10)) / 100),
                         ]);
                     } else if ($level == 1) {
-                        $income=  Income::create([
+                        $income =  Income::create([
                             'user_id' => $user->id,
                             'reference_user_id' => $refence_user['id'],
                             'level3_bonus' => round((100 * ($level * 10)) / 100),

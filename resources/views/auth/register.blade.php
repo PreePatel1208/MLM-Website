@@ -26,8 +26,8 @@
                 <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>
             <div class="mt-4">
-                <x-jet-label for="referral_code" value="{{ __('Referral Code') }}" />
-                <x-jet-input id="referral_code" class="block mt-1 w-full" type="text" name="referral_code"   />
+                <x-jet-label for="referral_code" value="{{ __('Referral Code') }}"  />
+                <x-jet-input id="referral_code" class="block mt-1 w-full" type="text"  placeholder="Referral code (Optional)" name="referral_code"   />
             </div>
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
             <div class="mt-4">
