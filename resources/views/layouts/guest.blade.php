@@ -8,10 +8,16 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Style  -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/mlm_tree.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/admin_panel.css') }}">
+
+
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
 
