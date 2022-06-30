@@ -1,9 +1,11 @@
 /*Now the CSS*/
 * {margin: 0; padding: 0;}
-
+.tree{
+	align-items: center;
+}
 .tree ul {
 	padding-top: 20px; position: relative;
-	
+
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
@@ -74,9 +76,10 @@ right connector from last child*/
 	text-decoration: none;
 	color: #666;
 	font-family: arial, verdana, tahoma;
-	font-size: 11px;
+	font-size: 35px;
 	display: inline-block;
-	
+	color: white;
+	background-color: rgb(83, 174, 192);
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
