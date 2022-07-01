@@ -4,56 +4,37 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
     <div class="py-12">
-       
-        
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-          
-            <div class="tree">
+                 <!-- display MLM tree -->
+                <div class="tree">
                     <ul>
-                   
                         <li>
                             <a href="#">
-                                <!-- {{$user->name}} -->
                                 Me
                             </a>
-                            @foreach($mlm_users as $user)
                             <ul>
+                                @foreach($mlm_users as $key=>$user)
                                 <li>
-                                    <a href="#">{{$user->name}}</a>                                  
-                                </li>
-                                @endforeach
-                                <!-- <li>
-                                    <a href="#">3</a>
+                                    <a href="#">{{$user['name']}}</a>  
                                     <ul>
                                         <ul>
+                                        @foreach($user['tree_user'] as $key=>$user)
                                             <li>
-                                                <a href="#">3.1</a>
-                                                <ul>
-                                                    <li>
-                                                        <a href="#">3.1.1</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">3.1.2</a>
-                                                    </li>
-                                                </ul>
+                                                <a href="#">{{$user['name']}}</a>
                                             </li>
-                                            <li>
-                                                <a href="#">3.2</a>
-                                            </li>
+                                            @endforeach
                                         </ul>
                                     </ul>
-                                </li> -->
-                               
+                                </li>
+                                @endforeach
                             </ul>
                         </li>
                     </ul>
                 </div>
-
+                <!-- display Earnings -->
                 @include('main_dashbord')
-              
                 <!-- <x-jet-welcome /> -->
             </div>
         </div>
